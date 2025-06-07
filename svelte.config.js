@@ -1,15 +1,9 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-vercel';
 
-const config = {
+export default {
   kit: {
     adapter: adapter({
-      pages: 'build',
-      assets: 'build',
-      fallback: 'index.html',
-      precompress: false,
-      strict: true
+      runtime: 'nodejs20.x'  // or 'nodejs18.x'
     })
   }
 };
-
-export default config;
