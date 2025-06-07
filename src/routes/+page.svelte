@@ -352,7 +352,7 @@
         background: #d2b48c;
         height: 300px;
         border-radius: 8px;
-        background-image: url("img1.jpg");
+        background-image: url("/img1.jpg");
         background-size: cover;
         background-position: center;
     }
@@ -499,7 +499,7 @@
         height: 300px;
         background: #d2b48c;
         border-radius: 8px;
-        background-image: url("img2.jpg");
+        background-image: url("/img2.jpg");
         background-size: cover;
         background-position: center;
     }
