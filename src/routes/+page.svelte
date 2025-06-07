@@ -1,0 +1,617 @@
+<script>
+    import { onMount } from "svelte";
+
+    // Reactive variables
+    let activeSlide = 0;
+    let formData = {
+        name: "",
+        email: "",
+        message: "",
+    };
+
+    // Slider functionality
+    import "@splidejs/splide/css";
+    import Splide from "@splidejs/splide";
+
+    let splideElement;
+    let splide;
+
+    // Your slide data
+    export let slides = [
+        { id: 1, image: "/img1.jpg" },
+        { id: 2, image: "/img2.jpg" },
+        { id: 3, image: "/img3.jpg" },
+        { id: 3, image: "/img4.jpg" },
+        { id: 3, image: "/img5.jpg" },
+        { id: 3, image: "/img6.jpg" },
+        { id: 3, image: "/img7.jpg" },
+        { id: 3, image: "/img8.jpg" },
+    ];
+
+    // Splide options
+    const options = {
+        type: "loop",
+        perPage: 3,
+        perMove: 1,
+        autoplay: true,
+        interval: 3000,
+        arrows: true,
+        pagination: true,
+        lazyLoad: "nearby",
+        responsive: {
+            768: {
+                perPage: 1,
+            },
+        },
+    };
+
+    // Scroll to section
+    function scrollToSection(sectionId) {
+        const element = document.querySelector(sectionId);
+        if (element) {
+            element.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+            });
+        }
+    }
+
+    // Handle form submission
+    function handleSubmit(event) {
+        event.preventDefault();
+        alert("Zpráva byla odeslána! (Demo funkcionalita)");
+        // Reset form
+        formData = { name: "", email: "", message: "" };
+    }
+
+    onMount(() => {
+        if (window.innerWidth < 768) options.perPage = 1;
+        splide = new Splide(splideElement, options);
+        splide.mount();
+
+        // Cleanup
+        return () => {
+            if (splide) {
+                splide.destroy();
+            }
+        };
+    });
+</script>
+
+<!-- Header -->
+<header>
+    <div class="container">
+        <div class="header-content">
+            <div class="logo">
+                <img src="/logo.png" alt="" />
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a
+                            href="#about"
+                            on:click|preventDefault={() =>
+                                scrollToSection("#about")}>O nás</a
+                        >
+                    </li>
+                    <li>
+                        <a
+                            href="#contact"
+                            on:click|preventDefault={() =>
+                                scrollToSection("#contact")}>Kontakt</a
+                        >
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Slider section -->
+<div class="splide" bind:this={splideElement}>
+    <div class="splide__track">
+        <ul class="splide__list">
+            {#each slides as slide}
+                <li class="splide__slide">
+                    <img src={slide.image} alt={slide.title} />
+                </li>
+            {/each}
+        </ul>
+    </div>
+</div>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>Kdo jsme</h2>
+                <p>
+                    Jsme stavební firma se specializací na kompletní realizaci
+                    střech, rekonstrukce střešních plášťů, výstavbu zahradních
+                    pergol a široké spektrum dokončovacích stavebních prací.
+                    Provádíme tesařské práce, kompletní dodávky krovů,
+                    dřevostavby a pokrývačské práce.
+                </p>
+                <p>
+                    Zajišťujeme střechy na klíč i kompletní rekonstrukce střech
+                    s důrazem na preciznost a kvalitu.
+                </p>
+                <p>
+                    Naší prioritou je kvalitní řemeslné zpracování,
+                    profesionální přístup a individuální řešení šité na míru
+                    každému zákazníkovi.
+                </p>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services" id="services">
+    <div class="container">
+        <h2>Naše služby</h2>
+
+        {#each [{ icon: "🔨", title: "Střešní práce", description: "Provádíme pokrývačské a tesařské práce související s rekonstrukcí střech.", list: ["Realizace nových střech na klíč (šikmé i ploché)", "Rekonstrukce a opravy střešních krytin", "Pokládka střešních krytin (betonové, pálené tašky, plechové krytiny aj.)", "Montáž střešních oken", "Zateplení střech a půdních prostor", "Tesařské práce"] }, { icon: "🧱", title: "Dokončovací stavební práce" }] as service}
+            <div class="service-card">
+                <h3>
+                    <div class="service-icon">{service.icon}</div>
+                    {service.title}
+                </h3>
+                {#if service.description}
+                    <p>{service.description}</p>
+                {/if}
+                {#if service.list}
+                    <ul class="service-list">
+                        {#each service.list as item}
+                            <li>{item}</li>
+                        {/each}
+                    </ul>
+                {/if}
+            </div>
+        {/each}
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section class="projects" id="projects">
+    <div class="container">
+        <h2>Příklady realizací</h2>
+        <div class="project-showcase">
+            <div class="project-info">
+                <h3>Rekonstrukce střechy</h3>
+                <div class="location">Ulice Valašská</div>
+                <ul>
+                    <li>Soubor střech o ploše cca 1400 metrů čtverečních</li>
+                    <li>
+                        Kompletní tesařské výměny – plátování krokví, platování
+                        vazných trámů, pískování krovů a jejich následné
+                        chemické ošetření proti dřevokazným houbám, hmyzu a
+                        plísním
+                    </li>
+                    <li>
+                        Zhotovení nové vnější krytiny – bobrovky, měděných okapů
+                        a svodů. Vše dle požadavků Národního Památkového Ústavu.
+                    </li>
+                </ul>
+            </div>
+            <div class="project-image"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="container">
+        <h2>Kontakt</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Stav Bílý s.r.o.</h3>
+                <p><strong>Jiří Bílý</strong></p>
+                <p>U Strouhy 525</p>
+                <p>Vestec, 252 42</p>
+                <br />
+                <p><strong>tel. číslo:</strong> +420 721 580 111</p>
+                <p><strong>e-mail:</strong> stavbily@gmail.com</p>
+                <br />
+                <p><strong>IČ:</strong> 22173145</p>
+            </div>
+            <div class="contact-form">
+                <form on:submit={handleSubmit}>
+                    <div class="form-group">
+                        <label for="name">Jméno a příjmení</label>
+                        <input
+                            type="text"
+                            id="name"
+                            bind:value={formData.name}
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input
+                            type="email"
+                            id="email"
+                            bind:value={formData.email}
+                            required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Zpráva</label>
+                        <textarea
+                            id="message"
+                            bind:value={formData.message}
+                            required
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Odeslat</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <p>Copyright © 2025 Stav Bílý s.r.o.</p>
+    </div>
+</footer>
+
+<style>
+    :global(*) {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :global(body) {
+        font-family: "Georgia", serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f8f6f3;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+        background: #f8f6f3;
+        padding: 20px 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo img {
+        width: 100px;
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: #d2691e;
+        font-weight: 700;
+        transition: color 0.3s;
+        cursor: pointer;
+    }
+
+    nav a:hover {
+        color: #8b4513;
+    }
+
+    /* Slider */
+    .splide__slide img {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    /* About Section */
+    .about {
+        padding: 80px 0;
+        background: #f8f6f3;
+    }
+
+    .about-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .about-text h2 {
+        font-size: 42px;
+        color: #8b4513;
+        margin-bottom: 30px;
+        font-weight: normal;
+    }
+
+    .about-text p {
+        font-size: 16px;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .about-image {
+        background: #d2b48c;
+        height: 300px;
+        border-radius: 8px;
+        background-image: url("img1.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Services Section */
+    .services {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .services h2 {
+        text-align: center;
+        font-size: 42px;
+        color: #8b4513;
+        margin-bottom: 60px;
+        font-weight: normal;
+    }
+
+    .service-card {
+        text-align: center;
+        padding: 40px;
+        background: #f8f6f3;
+        border-radius: 8px;
+        margin-bottom: 40px;
+    }
+
+    .service-card h3 {
+        font-size: 24px;
+        color: #8b4513;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .service-icon {
+        min-width: 40px;
+        height: 40px;
+        background: #d2691e;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+
+    .service-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .service-list {
+        list-style: none;
+        margin-top: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .service-list li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+        color: #666;
+        line-height: 1.4;
+        display: inline-block;
+        width: auto;
+        text-align: center;
+    }
+
+    .service-list li:after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: #d2691e;
+        opacity: 0.6;
+        margin: 10px auto;
+    }
+
+    .service-list li:first-child:before {
+        display: none;
+    }
+
+    /* Projects Section */
+    .projects {
+        padding: 80px 0;
+        background: #f8f6f3;
+    }
+
+    .projects h2 {
+        text-align: center;
+        font-size: 42px;
+        color: #8b4513;
+        margin-bottom: 60px;
+        font-weight: normal;
+    }
+
+    .project-showcase {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: center;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+    }
+
+    .project-info h3 {
+        font-size: 28px;
+        color: #8b4513;
+        margin-bottom: 10px;
+    }
+
+    .project-info .location {
+        color: #d2691e;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .project-info ul {
+        list-style: none;
+        color: #666;
+    }
+
+    .project-info li {
+        margin-bottom: 10px;
+        padding-left: 20px;
+        position: relative;
+    }
+
+    .project-info li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: #d2691e;
+        font-weight: bold;
+    }
+
+    .project-image {
+        height: 300px;
+        background: #d2b48c;
+        border-radius: 8px;
+        background-image: url("img2.jpg");
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Contact Section */
+    .contact {
+        padding: 80px 0;
+        background: white;
+    }
+
+    .contact h2 {
+        font-size: 42px;
+        color: #8b4513;
+        margin-bottom: 60px;
+        font-weight: normal;
+    }
+
+    .contact-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+    }
+
+    .contact-info {
+        color: #666;
+    }
+
+    .contact-info h3 {
+        color: #8b4513;
+        margin-bottom: 20px;
+        font-size: 20px;
+    }
+
+    .contact-info p {
+        margin-bottom: 10px;
+    }
+
+    .contact-form {
+        background: #f8f6f3;
+        padding: 40px;
+        border-radius: 8px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #8b4513;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: inherit;
+    }
+
+    .form-group textarea {
+        height: 120px;
+        resize: vertical;
+    }
+
+    .submit-btn {
+        background: #d2691e;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: #8b4513;
+    }
+
+    /* Footer */
+    footer {
+        background: #333;
+        color: white;
+        text-align: center;
+        padding: 30px 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .about-content,
+        .project-showcase,
+        .contact-content {
+            grid-template-columns: 1fr;
+        }
+
+        .header-content {
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        nav ul {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        h2 {
+            font-size: 32px !important;
+        }
+    }
+</style>
