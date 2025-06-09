@@ -1,5 +1,6 @@
 <script>
     import { onMount } from "svelte";
+    import { enhance } from "$app/forms";
 
     // Reactive variables
     let activeSlide = 0;
@@ -56,13 +57,7 @@
         }
     }
 
-    // Handle form submission
-    function handleSubmit(event) {
-        event.preventDefault();
-        alert("Zpráva byla odeslána! (Demo funkcionalita)");
-        // Reset form
-        formData = { name: "", email: "", message: "" };
-    }
+    export let form;
 
     onMount(() => {
         if (window.innerWidth < 768) options.perPage = 1;
@@ -218,31 +213,47 @@
                 <p><strong>IČ:</strong> 22173145</p>
             </div>
             <div class="contact-form">
-                <form on:submit={handleSubmit}>
+                <div class="contact-response">
+                    {#if form?.success}
+                        <p class="contact-success">{form.message}</p>
+                    {/if}
+
+                    {#if form?.error}
+                        <p class="contact-error">{form.error}</p>
+                    {/if}
+                </div>
+                <form method="post" use:enhance>
                     <div class="form-group">
                         <label for="name">Jméno a příjmení</label>
+                        <input type="text" id="name" name="name" required />
+                    </div>
+                    <div class="honeypot">
+                        <label for="company">Název firmy</label>
                         <input
                             type="text"
-                            id="name"
-                            bind:value={formData.name}
-                            required
+                            id="company"
+                            name="company"
+                            tabindex="-1"
+                            autocomplete="off"
                         />
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required />
+                    </div>
+                    <div class="honeypot-alt">
+                        <label for="phone">Telefon</label>
                         <input
-                            type="email"
-                            id="email"
-                            bind:value={formData.email}
-                            required
+                            type="text"
+                            id="phone"
+                            name="phone"
+                            tabindex="-1"
+                            autocomplete="off"
                         />
                     </div>
                     <div class="form-group">
                         <label for="message">Zpráva</label>
-                        <textarea
-                            id="message"
-                            bind:value={formData.message}
-                            required
+                        <textarea id="message" name="message" required
                         ></textarea>
                     </div>
                     <button type="submit" class="submit-btn">Odeslat</button>
@@ -543,6 +554,25 @@
         border-radius: 8px;
     }
 
+    .contact-response {
+        margin-bottom: 10px;
+    }
+
+    .contact-response p {
+        padding: 8px 12px;
+        border-radius: 4px;
+    }
+
+    .contact-success {
+        color: green;
+        background-color: rgba(34, 197, 94, 0.1);
+    }
+
+    .contact-error {
+        color: red;
+        background-color: rgba(239, 68, 68, 0.15);
+    }
+
     .form-group {
         margin-bottom: 20px;
     }
@@ -566,6 +596,23 @@
     .form-group textarea {
         height: 120px;
         resize: vertical;
+    }
+
+    .honeypot {
+        position: absolute !important;
+        left: -9999px !important;
+        width: 1px !important;
+        height: 1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .honeypot-alt {
+        display: none;
     }
 
     .submit-btn {
