@@ -150,7 +150,7 @@
 
         {#each [{ icon: "🔨", title: "Střešní práce", description: "Provádíme pokrývačské a tesařské práce související s rekonstrukcí střech.", list: ["Realizace nových střech na klíč (šikmé i ploché)", "Rekonstrukce a opravy střešních krytin", "Pokládka střešních krytin (betonové, pálené tašky, plechové krytiny aj.)", "Montáž střešních oken", "Zateplení střech a půdních prostor", "Tesařské práce"] }, { icon: "🧱", title: "Dokončovací stavební práce" }] as service}
             <div class="service-card">
-                <h3>
+                <h3 class="no-margin">
                     <div class="service-icon">{service.icon}</div>
                     {service.title}
                 </h3>
@@ -166,33 +166,6 @@
                 {/if}
             </div>
         {/each}
-    </div>
-</section>
-
-<!-- Projects Section -->
-<section class="projects" id="projects">
-    <div class="container">
-        <h2>Příklady realizací</h2>
-        <div class="project-showcase">
-            <div class="project-info">
-                <h3>Rekonstrukce střechy</h3>
-                <div class="location">Ulice Valašská</div>
-                <ul>
-                    <li>Soubor střech o ploše cca 1400 metrů čtverečních</li>
-                    <li>
-                        Kompletní tesařské výměny – plátování krokví, platování
-                        vazných trámů, pískování krovů a jejich následné
-                        chemické ošetření proti dřevokazným houbám, hmyzu a
-                        plísním
-                    </li>
-                    <li>
-                        Zhotovení nové vnější krytiny – bobrovky, měděných okapů
-                        a svodů. Vše dle požadavků Národního Památkového Ústavu.
-                    </li>
-                </ul>
-            </div>
-            <div class="project-image"></div>
-        </div>
     </div>
 </section>
 
@@ -393,7 +366,6 @@
     .service-card h3 {
         font-size: 24px;
         color: #8b4513;
-        margin-bottom: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -414,7 +386,7 @@
     .service-card p {
         color: #666;
         line-height: 1.6;
-        margin-bottom: 20px;
+        margin: 20px 0;
     }
 
     .service-list {
