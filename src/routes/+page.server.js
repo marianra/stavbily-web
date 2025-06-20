@@ -1,6 +1,6 @@
 import { transporter } from '$lib/email.js';
 import { fail } from '@sveltejs/kit';
-import { GMAIL_USER } from '$env/static/private';
+import { SEZNAM_USER } from '$env/static/private';
 
 export const actions = {
   default: async ({ request }) => {
@@ -23,8 +23,8 @@ export const actions = {
 
     try {
       await transporter.sendMail({
-        from: `"${name}" <${email}>`,
-        to: GMAIL_USER,
+        from: SEZNAM_USER,
+        to: SEZNAM_USER,
         subject: `Dotaz - ${name}`,
         html: `
           <h3>Nový dotaz z webu</h3>

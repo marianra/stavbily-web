@@ -1,10 +1,12 @@
 import nodemailer from 'nodemailer';
-import { GMAIL_USER, GMAIL_APP_PASSWORD } from '$env/static/private';
+import { SEZNAM_USER, SEZNAM_PASSWORD } from '$env/static/private';
 
 export const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.seznam.cz',
+  port: 465,
+  secure: true,
   auth: {
-    user: GMAIL_USER,
-    pass: GMAIL_APP_PASSWORD
+    user: SEZNAM_USER,
+    pass: SEZNAM_PASSWORD
   }
 });
