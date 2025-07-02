@@ -14,7 +14,6 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^6.0.0",
 		"@sveltejs/adapter-static": "^3.0.8",
-		"@sveltejs/adapter-vercel": "^5.7.2",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"svelte": "^5.0.0",
@@ -24,6 +23,7 @@
 	},
 	"dependencies": {
 		"@splidejs/splide": "^4.1.4",
+		"@sveltejs/adapter-netlify": "^5.0.2",
 		"nodemailer": "^7.0.3"
 	}
 }

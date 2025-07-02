@@ -1,9 +1,7 @@
-import adapter from '@sveltejs/adapter-vercel';
+import adapter from '@sveltejs/adapter-netlify';
 
 export default {
   kit: {
-    adapter: adapter({
-      runtime: 'nodejs20.x'  // or 'nodejs18.x'
-    })
+    adapter: adapter()
   }
 };
